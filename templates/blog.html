@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action='/blog' method='POST'>
+        {% for b in blogs %}
+        <input type="hidden" name="blog.id" value="{{b.id}}">
+            <h2 style="text-align:center;">{{b.title}}</h2>
+            <p>{{b.body}}</p>
+        {% endfor %}
+    </form>
+    
+{% endblock %}
