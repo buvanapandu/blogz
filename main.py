@@ -18,7 +18,7 @@ class Blog(db.Model):
     body = db.Column(db.Text)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     pub_date = db.Column(db.DateTime)
-    # Class initializations. Is that a word? Edit: Just googled it; it is.
+    
     def __init__(self, title, body, owner, pub_date=None):
         self.title = title
         self.body = body
@@ -27,7 +27,7 @@ class Blog(db.Model):
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
 
-# Created User class with ID, username, hashword, and posts.
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True)
@@ -120,7 +120,7 @@ def signup():
     return render_template('signup.html')
 
 # Blog route with all user posts.
-# TODO - Paginate Blog posts, limiting to 5 posts per page.
+
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
     blog_id = request.args.get('id')
@@ -131,7 +131,8 @@ def blog():
 
     if blog_id:
         post = Blog.query.filter_by(id=blog_id).first()
-        return render_template("post.html", title=post.title, body=post.body, user=post.owner.username, pub_date=post.pub_date, user_id=post.owner_id)
+        return render_template("post.html", title=post.title, body=post.body, user=post.owner.username, 
+        pub_date=post.pub_date, user_id=post.owner_id)
     if user_id:
         entries = Blog.query.filter_by(owner_id=user_id).all()
         return render_template('user.html', entries=entries)
@@ -153,9 +154,9 @@ def newpost():
     body_error = ""
 
     if title == "":
-        title_error = "Title required."
+        title_error = "Title required"
     if body == "":
-        body_error = "Content required."
+        body_error = "Content required"
 
     if not title_error and not body_error:
         new_post = Blog(title, body, owner)
